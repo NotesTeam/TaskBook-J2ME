@@ -18,6 +18,7 @@ public class MainMidlet extends MIDlet implements CommandListener, ItemCommandLi
 	public static Display display;
 	private List list;
 	private Command addNote;
+	private Command selectNote;
 	private Form addNoteForm;
 
 	public MainMidlet() {
@@ -26,15 +27,12 @@ public class MainMidlet extends MIDlet implements CommandListener, ItemCommandLi
 		addNoteForm = new AddNoteForm(this, list);
 		
 		//Setting up commands
-		addNote = new Command("Dodaj", Command.SCREEN, 1);
-		list.addCommand(addNote);
-		list.setCommandListener(this);
+		addNote = new Command("Add", Command.SCREEN, 0);
+		selectNote = new Command("Select", Command.SCREEN, 1);
 		
-//		StringItem sampleItem = new StringItem("Title", "Content", Item.BUTTON);
-//		form.append(sampleItem);
-//		form.append(new StringItem("Title", "Content", Item.BUTTON));
-//		sampleItem.setDefaultCommand(new Command("Set", Command.ITEM, 1));    
-//		sampleItem.setItemCommandListener(this);   
+		list.addCommand(addNote);
+		list.addCommand(selectNote);
+		list.setCommandListener(this);
 	}
 	
 	protected void startApp() throws MIDletStateChangeException {
@@ -55,6 +53,11 @@ public class MainMidlet extends MIDlet implements CommandListener, ItemCommandLi
 		if (c == addNote) {
 			System.out.println("Command clicked: Add new note");
 			addNewNote();
+		} else if (c == selectNote) {
+			Vector vector = RecordStoreManager.getInstance().getRecords();
+			Note note = (Note) vector.elementAt(list.getSelectedIndex());
+			System.out.println("Command clicked: Select note: " + note.toString());
+			display.setCurrent(new ShowNoteForm(list, note));
 		}
 	}
 	
