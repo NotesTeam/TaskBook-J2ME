@@ -1,0 +1,6 @@
+
+interface ListUpdateListener {
+
+	void onListUpdate();
+	
+}
