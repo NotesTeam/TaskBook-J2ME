@@ -1,6 +1,7 @@
 import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
+import javax.microedition.rms.RecordComparator;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
@@ -37,7 +38,7 @@ public class RecordStoreManager {
 	public Vector getRecords() {
 		Vector vector = new Vector();
 		try {
-			iterator = recordStore.enumerateRecords(null, null, false);
+			iterator = recordStore.enumerateRecords(null, new TimeComparator(), false);
 			while (iterator.hasNextElement()) {
 				byte[] record = iterator.nextRecord();
 				vector.addElement(ByteUtils.toNote(record));
@@ -71,6 +72,23 @@ public class RecordStoreManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+
+	class TimeComparator implements RecordComparator {
+		public int compare(byte[] rec1, byte[] rec2) {
+			Note note1 = ByteUtils.toNote(rec1);
+			Note note2 = ByteUtils.toNote(rec2);
+			int result = (int) (note2.getTimestamp()/1000 - note1.getTimestamp()/1000);
+			System.out.println("Note comparing: " + note1.toString() + " & " + note2.toString() + " result: " + String.valueOf(result));
+			
+			if (result == 0)
+			      return RecordComparator.EQUIVALENT;
+			    else if (result < 0)
+			      return RecordComparator.PRECEDES;
+			    else
+			      return RecordComparator.FOLLOWS;
+		}
 	}
 	
 //	private boolean isRecordStoreEmpty(){
