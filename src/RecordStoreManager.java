@@ -39,8 +39,8 @@ public class RecordStoreManager {
 		try {
 			iterator = recordStore.enumerateRecords(null, null, false);
 			while (iterator.hasNextElement()) {
-				byte[] rekord = iterator.nextRecord();
-				vector.addElement(ByteUtils.toNote(rekord));
+				byte[] record = iterator.nextRecord();
+				vector.addElement(ByteUtils.toNote(record));
 			}
 		} catch (RecordStoreException e) {
 			e.printStackTrace();

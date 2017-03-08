@@ -19,39 +19,45 @@ public class AddNoteForm extends Form implements CommandListener {
 	private Displayable backDisplay;
 	private ListUpdateListener callback;
 	
+	private ChoiceGroup categoryField;
+	private DateField dateField;
 	private TextField titleField;
 	private TextField contentField;
-	private DateField dateField;
-	private ChoiceGroup categoryField;
 	
 	public AddNoteForm(ListUpdateListener callback, Displayable backDisplay) {
 		super("Add note");
 		this.backDisplay = backDisplay;
 		this.callback = callback;
-		setupCommands();
 		display = MainMidlet.getDisplay();
+		setupCommands();
 		setupFields();
 	}
 
 	public void commandAction(Command c, Displayable d) {
-		if(c == save) {
-			System.out.println("Command clicked: Saved");
+		if(c == save)
 			saveNote();
-			display.setCurrent(backDisplay);
-		} else if (c == cancel) {
-			System.out.println("Command clicked: Cancel");
-			display.setCurrent(backDisplay);
-		}
+		else if (c == cancel)
+			closeForm();
 	}
 
 	private void saveNote() {
+		saveNoteToDB();
+		closeForm();
+		cleanFields();
+	}
+
+	private void closeForm() {
+		display.setCurrent(backDisplay);
+	}
+
+	private void saveNoteToDB() {
+		System.out.println("Command clicked: Saved");
 		Note note = createNote();
 		if(note!=null) {
 			System.out.println("Saving: " + note.toString());
 			byte[] record = ByteUtils.toByteArray(note);
 			RecordStoreManager.getInstance().saveRecord(record);
 			callback.onListUpdate();
-			cleanFields();
 		}
 	}
 
@@ -59,12 +65,17 @@ public class AddNoteForm extends Form implements CommandListener {
 		String title = titleField.getString();
 		if(title.equals(""))
 			return null;
-		long dateInMilis = dateField.getDate() == null ? Calendar.getInstance().getTime().getTime() : dateField.getDate().getTime();
+		long dateInMilis = getDateInMilis();
 		return new Note(
 				title, 
 				contentField.getString(),
 				dateInMilis,
 				categoryField.getString(categoryField.getSelectedIndex()));
+	}
+
+	private long getDateInMilis() {
+		long dateInMilis = dateField.getDate() == null ? Calendar.getInstance().getTime().getTime() : dateField.getDate().getTime();
+		return dateInMilis;
 	}
 	
 	private void setupCommands(){
