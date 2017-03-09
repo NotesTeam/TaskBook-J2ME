@@ -57,6 +57,6 @@ public class ShowNoteForm extends Form implements CommandListener {
 		titleItem.setText(note.getTitle());
 		contentItem.setText(note.getContent());
 		dateItem.setText(Utils.getReadableDate(note.getTimestamp()));
-		categoryItem.setText(note.getCategory());
+		categoryItem.setText(note.getCategory().toString());
 	}
 }

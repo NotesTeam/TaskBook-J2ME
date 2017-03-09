@@ -61,9 +61,7 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		System.out.println("Index: " + String.valueOf(index));
 		this.insert(index, ((Note) newNote).getTitle(), null);
 	}
-	
-//	private int indexOf()
-	
+		
 	private void addNewNote() {
 		System.out.println("Command clicked: Add new note");
 		display.setCurrent(addNoteForm);

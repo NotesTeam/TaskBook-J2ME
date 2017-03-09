@@ -70,7 +70,7 @@ public class AddNoteForm extends Form implements CommandListener {
 				title,
 				contentField.getString(),
 				dateInMilis,
-				categoryField.getString(categoryField.getSelectedIndex()));
+				Category.toCategory(categoryField.getString(categoryField.getSelectedIndex())));
 	}
 
 	private long getDateInMilis() {
@@ -90,11 +90,7 @@ public class AddNoteForm extends Form implements CommandListener {
 		titleField = new TextField("Title", "", 32, TextField.ANY);
 		contentField = new TextField("Content", "", 128, TextField.ANY);
 		dateField = new DateField("Date", DateField.DATE);
-		categoryField = new ChoiceGroup("Category", Choice.EXCLUSIVE, new String[] {
-			"Important",
-			"Normal",
-			"Archive"
-		}, null);
+		categoryField = new ChoiceGroup("Category", Choice.EXCLUSIVE, Category.elements, null);
 		
 		this.append(titleField);
 		this.append(contentField);

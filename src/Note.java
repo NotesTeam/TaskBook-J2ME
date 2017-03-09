@@ -9,9 +9,9 @@ public class Note {
 	private String title;
 	private String content;
 	private long timestamp;
-	private String category;
+	private Category category;
 	
-	public Note(String title, String content, long timestamp, String category) {
+	public Note(String title, String content, long timestamp, Category category) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -37,10 +37,10 @@ public class Note {
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 	

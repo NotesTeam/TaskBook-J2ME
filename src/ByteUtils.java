@@ -13,7 +13,7 @@ public class ByteUtils {
 			dout.writeUTF(note.getTitle());
 			dout.writeUTF(note.getContent());
 			dout.writeLong(note.getTimestamp());
-			dout.writeUTF(note.getCategory());
+			dout.writeUTF(note.getCategory().toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -27,15 +27,17 @@ public class ByteUtils {
 		String title = "";
 		String content = "";
 		long timestamp = 0;
-		String category = "";
+		String sCategory = "";
 		try {
 			title = dis.readUTF();
 			content = dis.readUTF();
 			timestamp = dis.readLong();
-			category = dis.readUTF();
+			sCategory = dis.readUTF();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		Category category = Category.toCategory(sCategory);
 		return new Note(title, content, timestamp, category);   
 	}
 }
