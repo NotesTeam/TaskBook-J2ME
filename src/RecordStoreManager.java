@@ -80,7 +80,6 @@ public class RecordStoreManager {
 			Note note1 = ByteUtils.toNote(rec1);
 			Note note2 = ByteUtils.toNote(rec2);
 			int result = (int) (note2.getTimestamp()/1000 - note1.getTimestamp()/1000);
-			System.out.println("Note comparing: " + note1.toString() + " & " + note2.toString() + " result: " + String.valueOf(result));
 			
 			if (result == 0)
 			      return RecordComparator.EQUIVALENT;

@@ -47,5 +47,16 @@ public class Note {
 	public String toString(){
 		return title + " " + content + " " + category + "\n";
 	}
+	
+	public boolean equals(Object other){
+		if(other instanceof Note) {
+			Note otherNote = (Note) other;
+			return title.equals(otherNote.getTitle()) 
+					&& content.equals(otherNote.getContent())
+					&& timestamp == otherNote.getTimestamp()
+					&& category.equals(otherNote.getCategory());
+		} else
+			return false;
+	}
 
 }

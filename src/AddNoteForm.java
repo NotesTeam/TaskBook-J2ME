@@ -57,7 +57,7 @@ public class AddNoteForm extends Form implements CommandListener {
 			System.out.println("Saving: " + note.toString());
 			byte[] record = ByteUtils.toByteArray(note);
 			RecordStoreManager.getInstance().saveRecord(record);
-			callback.onListUpdate();
+			callback.onListUpdate(note);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class AddNoteForm extends Form implements CommandListener {
 			return null;
 		long dateInMilis = getDateInMilis();
 		return new Note(
-				title, 
+				title,
 				contentField.getString(),
 				dateInMilis,
 				categoryField.getString(categoryField.getSelectedIndex()));

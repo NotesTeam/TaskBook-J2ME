@@ -1,6 +1,6 @@
 
 interface ListUpdateListener {
 
-	void onListUpdate();
+	void onListUpdate(Object newObject);
 	
 }
