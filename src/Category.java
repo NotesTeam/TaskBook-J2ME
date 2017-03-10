@@ -4,7 +4,7 @@ import javax.microedition.lcdui.Image;
 
 // http://www.javaworld.com/article/2076970/core-java/create-enumerated-constants-in-java.html
 
-public final class Category {
+public final class Category implements Comparable {
 
 	private String id;
 	public final int ord;
@@ -51,6 +51,16 @@ public final class Category {
 
 	public Image getIcon() {
 		return icon;
+	}
+
+	public int compareTo(Object o) {
+		Category other = (Category) o;
+		if(other == IMPORTANT || (other == NORMAL && this == LOW_PRIORITY))
+			return -1;
+		else if (other == this)
+			return 0;
+		else
+			return 1;
 	}
 
 }

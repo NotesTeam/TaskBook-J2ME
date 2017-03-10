@@ -9,22 +9,27 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 
 public class RecordStoreManager {
-	
+
+	private final RecordComparator timeComparator = new TimeComparator();
+	private final RecordComparator priorityComparator = new PriorityComparator();
+
+	private RecordComparator recordComparator;
 	private RecordStore recordStore;
 	private RecordEnumeration iterator;
-	
+
 	private static RecordStoreManager instance = null;
-	
+
 	public static RecordStoreManager getInstance() {
 		if(instance==null)
 			instance = new RecordStoreManager();
 		return instance;
 	}
-	
+
 	private RecordStoreManager() {
 		recordStore = getRecordStore();
+		recordComparator = timeComparator;
 	}
-	
+
 	public boolean saveRecord(byte[] record) {
 		try {
 			recordStore.addRecord(record, 0, record.length);
@@ -34,11 +39,11 @@ public class RecordStoreManager {
 		}
 		return false;
 	}
-	
+
 	public Vector getRecords() {
 		Vector vector = new Vector();
 		try {
-			iterator = recordStore.enumerateRecords(null, new TimeComparator(), false);
+			iterator = recordStore.enumerateRecords(null, recordComparator, false);
 			while (iterator.hasNextElement()) {
 				byte[] record = iterator.nextRecord();
 				vector.addElement(ByteUtils.toNote(record));
@@ -49,7 +54,7 @@ public class RecordStoreManager {
 		System.out.println("getRecords size: " + vector.size());
 		return vector;
 	}
-	
+
 	public String getRecord(int position) {
 		try {
 			return new String(recordStore.getRecord(position), "UTF-8");
@@ -74,35 +79,58 @@ public class RecordStoreManager {
 		return null;
 	}
 	
+	public void sortByTime(){
+		recordComparator = timeComparator;
+	}
+	
+	public void sortByPriority() {
+		recordComparator = priorityComparator;
+	}
 
-	class TimeComparator implements RecordComparator {
+	private class TimeComparator implements RecordComparator {
 		public int compare(byte[] rec1, byte[] rec2) {
 			Note note1 = ByteUtils.toNote(rec1);
 			Note note2 = ByteUtils.toNote(rec2);
 			int result = (int) (note2.getTimestamp()/1000 - note1.getTimestamp()/1000);
-			
+
 			if (result == 0)
-			      return RecordComparator.EQUIVALENT;
-			    else if (result < 0)
-			      return RecordComparator.PRECEDES;
-			    else
-			      return RecordComparator.FOLLOWS;
+				return RecordComparator.EQUIVALENT;
+			else if (result < 0)
+				return RecordComparator.PRECEDES;
+			else
+				return RecordComparator.FOLLOWS;
 		}
 	}
-	
-//	private boolean isRecordStoreEmpty(){
-//		try {
-//			if(recordStore.getNumRecords() == 0) {
-//				System.out.println("Record store is empty");
-//				return true;
-//			} else {
-//				System.out.println("Record store is not empty");
-//				System.out.println("Size of RecordStore: " + recordStore.getNumRecords());
-//				return false;
-//			}
-//		} catch (RecordStoreNotOpenException e) {
-//			e.printStackTrace();
-//		}
-//		return true;
-//	}
+
+	private class PriorityComparator implements RecordComparator {
+		public int compare(byte[] rec1, byte[] rec2) {
+			Note note1 = ByteUtils.toNote(rec1);
+			Note note2 = ByteUtils.toNote(rec2);
+
+			int result = note2.getCategory().compareTo(note1.getCategory());
+
+			if (result == 0)
+				return RecordComparator.EQUIVALENT;
+			else if (result < 0)
+				return RecordComparator.PRECEDES;
+			else
+				return RecordComparator.FOLLOWS;
+		}
+	}
+
+	//	private boolean isRecordStoreEmpty(){
+	//		try {
+	//			if(recordStore.getNumRecords() == 0) {
+	//				System.out.println("Record store is empty");
+	//				return true;
+	//			} else {
+	//				System.out.println("Record store is not empty");
+	//				System.out.println("Size of RecordStore: " + recordStore.getNumRecords());
+	//				return false;
+	//			}
+	//		} catch (RecordStoreNotOpenException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return true;
+	//	}
 }

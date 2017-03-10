@@ -10,9 +10,11 @@ import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.List;
 
 public class NotesList extends List implements CommandListener, ListUpdateListener {
-	
+
 	private Command addNote;
 	private Command selectNote;
+	private Command sortByPriority;
+	private Command sortByTime;
 	private Display display;
 	private Form addNoteForm;
 
@@ -22,12 +24,16 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		addNoteForm = new AddNoteForm(this, this);
 		setupCommands();
 	}
-	
+
 	private void setupCommands() {
 		addNote = new Command("Add", Command.SCREEN, 0);
-		selectNote = new Command("Select", Command.SCREEN, 1);		
+		selectNote = new Command("Select", Command.SCREEN, 1);
+		sortByPriority = new Command("By Prior.", Command.SCREEN, 0);
+		sortByTime = new Command("By Time", Command.SCREEN, 0);
 		addCommand(addNote);
 		addCommand(selectNote);
+		addCommand(sortByPriority);
+		addCommand(sortByTime);
 		setCommandListener(this);
 	}
 
@@ -36,15 +42,31 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 			addNewNote();
 		else if (c == selectNote)
 			showNoteDetails();
+		else if (c == sortByPriority)
+			sortListByPriority();
+		else if (c == sortByTime)
+			sortListByTime();
 	}
-	
+
+	private void sortListByTime() {
+		this.deleteAll();
+		RecordStoreManager.getInstance().sortByTime();
+		inflateList();
+	}
+
+	private void sortListByPriority() {
+		this.deleteAll();
+		RecordStoreManager.getInstance().sortByPriority();
+		inflateList();
+	}
+
 	public void inflateList() {
 		Vector vector = RecordStoreManager.getInstance().getRecords();
 		Enumeration enumeration = vector.elements();
 		while(enumeration.hasMoreElements())
 			addListRow(enumeration);
 	}
-	
+
 	public void onListUpdate(Object newNote) {
 		notifyItemInserted(newNote);
 	}
@@ -62,12 +84,12 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		Note note = (Note) newNote;
 		this.insert(index, note.getTitle(), note.getCategory().getIcon());
 	}
-		
+
 	private void addNewNote() {
 		System.out.println("Command clicked: Add new note");
 		display.setCurrent(addNoteForm);
 	}
-	
+
 	private void showNoteDetails() {
 		Vector vector = RecordStoreManager.getInstance().getRecords();
 		Note note = (Note) vector.elementAt(getSelectedIndex());
