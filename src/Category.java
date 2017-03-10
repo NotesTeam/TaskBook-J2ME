@@ -22,7 +22,6 @@ public final class Category implements Comparable {
 			else
 				this.icon = Image.createImage("/low.png");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

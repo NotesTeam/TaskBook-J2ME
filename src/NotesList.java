@@ -13,7 +13,6 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 
 	private Command addNote;
 	private Command exit;
-	private Command selectNote;
 	private Command sortByPriority;
 	private Command sortByTime;
 	private Display display;
@@ -31,22 +30,20 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 	private void setupCommands() {
 		addNote = new Command("Add", Command.SCREEN, 0);
 		exit = new Command("Exit", Command.EXIT, -1);
-		selectNote = new Command("Select", Command.SCREEN, 1);
 		sortByPriority = new Command("By Prior.", Command.SCREEN, 0);
 		sortByTime = new Command("By Time", Command.SCREEN, 0);
 		addCommand(addNote);
 		addCommand(exit);
-		addCommand(selectNote);
 		addCommand(sortByPriority);
 		addCommand(sortByTime);
 		setCommandListener(this);
 	}
 
 	public void commandAction(Command c, Displayable d) {
-		if (c == addNote) 
-			addNewNote();
-		else if (c == selectNote)
+		if (c == List.SELECT_COMMAND)
 			showNoteDetails();
+		else if (c == addNote) 
+			addNewNote();
 		else if (c == sortByPriority)
 			sortListByPriority();
 		else if (c == sortByTime)
