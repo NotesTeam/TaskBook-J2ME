@@ -12,25 +12,30 @@ import javax.microedition.lcdui.List;
 public class NotesList extends List implements CommandListener, ListUpdateListener {
 
 	private Command addNote;
+	private Command exit;
 	private Command selectNote;
 	private Command sortByPriority;
 	private Command sortByTime;
 	private Display display;
 	private Form addNoteForm;
+	private MainOperations mainCallback;
 
-	public NotesList() {
+	public NotesList(MainOperations mainOperations) {
 		super("TaskBook", Choice.IMPLICIT);
 		display = MainMidlet.getDisplay();
 		addNoteForm = new AddNoteForm(this, this);
 		setupCommands();
+		this.mainCallback = mainOperations;
 	}
 
 	private void setupCommands() {
 		addNote = new Command("Add", Command.SCREEN, 0);
+		exit = new Command("Exit", Command.EXIT, -1);
 		selectNote = new Command("Select", Command.SCREEN, 1);
 		sortByPriority = new Command("By Prior.", Command.SCREEN, 0);
 		sortByTime = new Command("By Time", Command.SCREEN, 0);
 		addCommand(addNote);
+		addCommand(exit);
 		addCommand(selectNote);
 		addCommand(sortByPriority);
 		addCommand(sortByTime);
@@ -46,6 +51,12 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 			sortListByPriority();
 		else if (c == sortByTime)
 			sortListByTime();
+		else if (c == exit)
+			exitApplication();
+	}
+
+	private void exitApplication() {
+		mainCallback.exitApplication(false);
 	}
 
 	private void sortListByTime() {

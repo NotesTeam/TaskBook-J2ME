@@ -2,14 +2,14 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-public class MainMidlet extends MIDlet {
+public class MainMidlet extends MIDlet implements MainOperations {
 
 	public static Display display;
 	private NotesList notesList;
 
 	public MainMidlet() {
 		display = Display.getDisplay(this);
-		notesList = new NotesList();
+		notesList = new NotesList(this);
 	}
 
 	protected void startApp() throws MIDletStateChangeException {
@@ -21,12 +21,21 @@ public class MainMidlet extends MIDlet {
 	protected void pauseApp() {
 
 	}
-
-	protected void destroyApp(boolean unconditional) throws MIDletStateChangeException {
-
-	}
 	
 	public static Display getDisplay() {
 		return display;
+	}
+	
+	public void exitApplication(boolean unconditional) {
+		try {
+			destroyApp(unconditional);
+		} catch (MIDletStateChangeException e) {
+			e.printStackTrace();
+		}
+		notifyDestroyed();
+	}
+
+	protected void destroyApp(boolean unconditional) throws MIDletStateChangeException {
+		System.out.println("exit clicked");
 	}
 }
