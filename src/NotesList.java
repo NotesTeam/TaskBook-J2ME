@@ -52,14 +52,15 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 	private void addListRow(Enumeration enumeration) {
 		Note note = (Note) enumeration.nextElement();
 		System.out.println("Read: " + note.toString());
-		this.append(note.getTitle(), null);
+		this.append(note.getTitle(), note.getCategory().getIcon());
 	}
 
 	private void notifyItemInserted(Object newNote) {
 		Vector vector = RecordStoreManager.getInstance().getRecords();
-		int index = vector.indexOf((Object) newNote);
+		int index = vector.indexOf(newNote);
 		System.out.println("Index: " + String.valueOf(index));
-		this.insert(index, ((Note) newNote).getTitle(), null);
+		Note note = (Note) newNote;
+		this.insert(index, note.getTitle(), note.getCategory().getIcon());
 	}
 		
 	private void addNewNote() {
