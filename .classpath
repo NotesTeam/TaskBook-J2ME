@@ -3,6 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/Oracle Java(TM) Platform Micro Edition SDK 3.4/JavaMEPhone1"/>
-	<classpathentry kind="lib" path="j2me-json-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
