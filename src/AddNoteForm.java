@@ -9,7 +9,6 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
-import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.TextField;
 
 
@@ -24,7 +23,6 @@ public class AddNoteForm extends Form implements CommandListener {
 	private ChoiceGroup categoryField;
 	private DateField dateField;
 	private Gauge priorityField;
-	private ImageItem imageField;
 	private TextField titleField;
 	private TextField contentField;
 	
@@ -93,14 +91,12 @@ public class AddNoteForm extends Form implements CommandListener {
 	}
 	
 	private void setupFields() {
-		imageField = new ImageItem(null, Category.LOW_PRIORITY.getIcon(), 0, null);
 		titleField = new TextField("Title", "", 32, TextField.ANY);
 		contentField = new TextField("Content", "", 128, TextField.ANY);
 		dateField = new DateField("Date", DateField.DATE);
 		categoryField = new ChoiceGroup("Category", Choice.EXCLUSIVE, Category.elements, null);
 		priorityField = new Gauge("Priority", true, 10, 5);
 		
-		this.append(imageField);
 		this.append(titleField);
 		this.append(contentField);
 		this.append(dateField);

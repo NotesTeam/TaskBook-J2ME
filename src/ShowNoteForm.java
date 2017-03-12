@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.StringItem;
 
 public class ShowNoteForm extends Form implements CommandListener {
@@ -13,10 +14,11 @@ public class ShowNoteForm extends Form implements CommandListener {
 	private Display display;
 	private Note note;
 	
+	private ImageItem imageItem;
 	private StringItem titleItem;
 	private StringItem contentItem;
 	private StringItem dateItem;
-	private StringItem categoryItem;
+	private StringItem priorityItem;
 	
 	public ShowNoteForm(Displayable backDisplay, Note note) {
 		super("Note informations");
@@ -36,15 +38,17 @@ public class ShowNoteForm extends Form implements CommandListener {
 	}
 
 	private void setupFields() {
+		imageItem = new ImageItem("Category: " + note.getCategory().toString(), note.getCategory().getIcon(), 0, "ctgimg");
 		titleItem = new StringItem("Title", null);
-		titleItem.setFont(Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+		titleItem.setFont(Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
 		contentItem = new StringItem("Content", null);
 		dateItem = new StringItem("Date", null);
-		categoryItem = new StringItem("Category", null);
+		priorityItem = new StringItem("Priority", null);
+		this.append(imageItem);
 		this.append(titleItem);
 		this.append(contentItem);
 		this.append(dateItem);
-		this.append(categoryItem);
+		this.append(priorityItem);
 	}
 
 	private void setupCommands() {
@@ -57,6 +61,6 @@ public class ShowNoteForm extends Form implements CommandListener {
 		titleItem.setText(note.getTitle());
 		contentItem.setText(note.getContent());
 		dateItem.setText(Utils.getReadableDate(note.getTimestamp()));
-		categoryItem.setText(note.getCategory().toString());
+		priorityItem.setText(String.valueOf(note.getPriority()));
 	}
 }

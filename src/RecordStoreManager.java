@@ -10,6 +10,7 @@ import javax.microedition.rms.RecordStoreNotFoundException;
 
 public class RecordStoreManager {
 
+	private final RecordComparator categoryComparator = new CategoryComparator();
 	private final RecordComparator timeComparator = new TimeComparator();
 	private final RecordComparator priorityComparator = new PriorityComparator();
 
@@ -66,6 +67,10 @@ public class RecordStoreManager {
 		return "";
 	}
 	
+	public void sortByCategory() {
+		recordComparator = categoryComparator;
+	}
+	
 	public void sortByTime(){
 		recordComparator = timeComparator;
 	}
@@ -93,6 +98,21 @@ public class RecordStoreManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private class CategoryComparator implements RecordComparator {
+		public int compare(byte[] rec1, byte[] rec2) {
+			Note note1 = ByteUtils.toNote(rec1);
+			Note note2 = ByteUtils.toNote(rec2);
+			int result = note2.getCategory().compareTo(note1.getCategory());
+
+			if (result == 0)
+				return RecordComparator.EQUIVALENT;
+			else if (result < 0)
+				return RecordComparator.PRECEDES;
+			else
+				return RecordComparator.FOLLOWS;
+		}
 	}
 
 	private class TimeComparator implements RecordComparator {

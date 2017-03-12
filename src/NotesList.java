@@ -15,6 +15,7 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 
 	private Command addNote;
 	private Command exit;
+	private Command sortByCategory;
 	private Command sortByPriority;
 	private Command sortByTime;
 	private Display display;
@@ -32,10 +33,12 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 	private void setupCommands() {
 		addNote = new Command("Add", Command.SCREEN, 0);
 		exit = new Command("Exit", Command.EXIT, -1);
+		sortByCategory = new Command("By Cat.", Command.SCREEN, 0);
 		sortByPriority = new Command("By Prior.", Command.SCREEN, 0);
 		sortByTime = new Command("By Time", Command.SCREEN, 0);
 		addCommand(addNote);
 		addCommand(exit);
+		addCommand(sortByCategory);
 		addCommand(sortByPriority);
 		addCommand(sortByTime);
 		setCommandListener(this);
@@ -46,6 +49,8 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 			showNoteDetails();
 		else if (c == addNote) 
 			addNewNote();
+		else if (c == sortByCategory)
+			sortListByCategory();
 		else if (c == sortByPriority)
 			sortListByPriority();
 		else if (c == sortByTime)
@@ -58,6 +63,12 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		mainCallback.exitApplication(false);
 	}
 
+	private void sortListByCategory() {
+		this.deleteAll();
+		RecordStoreManager.getInstance().sortByCategory();
+		inflateList();		
+	}
+	
 	private void sortListByTime() {
 		this.deleteAll();
 		RecordStoreManager.getInstance().sortByTime();

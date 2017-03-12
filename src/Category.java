@@ -15,12 +15,12 @@ public final class Category implements Comparable {
 		this.id = anID;
 		this.ord = upperBound++;
 		try {
-			if(anID.equals("Important"))
-				this.icon = Image.createImage("/important.png");
-			else if(anID.equals("Normal"))
-				this.icon = Image.createImage("/normal.png");
+			if(anID.equals("Family"))
+				this.icon = Image.createImage("/family.png");
+			else if(anID.equals("Work"))
+				this.icon = Image.createImage("/work.png");
 			else
-				this.icon = Image.createImage("/low.png");
+				this.icon = Image.createImage("/school.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -29,23 +29,23 @@ public final class Category implements Comparable {
 	public String toString() {return this.id;}
 	public static int size() {return upperBound;}
 
-	public static final Category IMPORTANT = new Category("Important");
-	public static final Category NORMAL = new Category("Normal");
-	public static final Category LOW_PRIORITY = new Category("Low priority");
+	public static final Category WORK = new Category("Work");
+	public static final Category FAMILY = new Category("Family");
+	public static final Category SCHOOL = new Category("School");
 
 	public static final String[] elements = {
-			IMPORTANT.id,
-			NORMAL.id,
-			LOW_PRIORITY.id
+			FAMILY.id,
+			WORK.id,
+			SCHOOL.id
 	};
 
 	public static Category toCategory(String c) {
-		if (c.equals("Important"))
-			return IMPORTANT;
-		else if (c.equals("Normal"))
-			return NORMAL;
+		if (c.equals("Family"))
+			return FAMILY;
+		else if (c.equals("Work"))
+			return WORK;
 		else
-			return LOW_PRIORITY;
+			return SCHOOL;
 	}
 
 	public Image getIcon() {
@@ -54,7 +54,7 @@ public final class Category implements Comparable {
 
 	public int compareTo(Object o) {
 		Category other = (Category) o;
-		if(other == IMPORTANT || (other == NORMAL && this == LOW_PRIORITY))
+		if(other == FAMILY || (other == WORK && this == SCHOOL))
 			return -1;
 		else if (other == this)
 			return 0;
