@@ -36,6 +36,6 @@ public class MainMidlet extends MIDlet implements MainOperations {
 	}
 
 	protected void destroyApp(boolean unconditional) throws MIDletStateChangeException {
-		System.out.println("exit clicked");
+		RecordStoreManager.getInstance().closeRecordStore();
 	}
 }

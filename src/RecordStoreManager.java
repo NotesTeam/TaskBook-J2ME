@@ -65,6 +65,22 @@ public class RecordStoreManager {
 		}
 		return "";
 	}
+	
+	public void sortByTime(){
+		recordComparator = timeComparator;
+	}
+	
+	public void sortByPriority() {
+		recordComparator = priorityComparator;
+	}
+	
+	public void closeRecordStore(){
+		try {
+			recordStore.closeRecordStore();
+		} catch (RecordStoreException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private RecordStore getRecordStore() {
 		try {
@@ -77,14 +93,6 @@ public class RecordStoreManager {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	public void sortByTime(){
-		recordComparator = timeComparator;
-	}
-	
-	public void sortByPriority() {
-		recordComparator = priorityComparator;
 	}
 
 	private class TimeComparator implements RecordComparator {
@@ -107,7 +115,7 @@ public class RecordStoreManager {
 			Note note1 = ByteUtils.toNote(rec1);
 			Note note2 = ByteUtils.toNote(rec2);
 
-			int result = note2.getCategory().compareTo(note1.getCategory());
+			int result = note2.getPriority() - note1.getPriority();
 
 			if (result == 0)
 				return RecordComparator.EQUIVALENT;

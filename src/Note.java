@@ -4,18 +4,21 @@ public class Note {
 	public static String TITLE = "title";
 	public static String CONTENT = "content";
 	public static String TIMESTAMP = "timestamp";
+	public static String PRIORITY = "priority";
 	public static String CATEGORY = "category";
 	
 	private String title;
 	private String content;
 	private long timestamp;
+	private int priority;
 	private Category category;
 	
-	public Note(String title, String content, long timestamp, Category category) {
+	public Note(String title, String content, long timestamp, int priority, Category category) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.timestamp = timestamp;
+		this.priority = priority;
 		this.category = category;
 	}
 	
@@ -37,6 +40,9 @@ public class Note {
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
+	public int getPriority(){
+		return priority;
+	}
 	public Category getCategory() {
 		return category;
 	}
@@ -45,7 +51,7 @@ public class Note {
 	}
 	
 	public String toString(){
-		return title + " " + content + " " + category + "\n";
+		return title + " " + " " + String.valueOf(priority) + " "+ content + " " + category + "\n";
 	}
 	
 	public boolean equals(Object other){

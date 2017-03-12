@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -7,6 +8,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
 
 public class NotesList extends List implements CommandListener, ListUpdateListener {
@@ -82,7 +84,7 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 	private void addListRow(Enumeration enumeration) {
 		Note note = (Note) enumeration.nextElement();
 		System.out.println("Read: " + note.toString());
-		this.append(note.getTitle(), note.getCategory().getIcon());
+		this.append(note.getTitle(), getListRowImage(note.getPriority()));
 	}
 
 	private void notifyItemInserted(Object newNote) {
@@ -90,7 +92,7 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		int index = vector.indexOf(newNote);
 		System.out.println("Index: " + String.valueOf(index));
 		Note note = (Note) newNote;
-		this.insert(index, note.getTitle(), note.getCategory().getIcon());
+		this.insert(index, note.getTitle(), getListRowImage(note.getPriority()));
 	}
 
 	private void addNewNote() {
@@ -104,5 +106,27 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		System.out.println("Command clicked: Select note: " + note.toString());
 		display.setCurrent(new ShowNoteForm(this, note));
 	}
-
+	
+	private Image getListRowImage(int priority){
+		Image image = null;
+		if (priority < 3)
+			try {
+				image = Image.createImage("/low.png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		else if (priority < 7)
+			try {
+				image = Image.createImage("/normal.png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		else
+			try {
+				image = Image.createImage("/important.png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		return image;
+	}
 }

@@ -36,6 +36,7 @@ public class ByteUtils {
 				jsonNote.optString(Note.TITLE),
 				jsonNote.optString(Note.CONTENT),
 				jsonNote.optLong(Note.TIMESTAMP),
+				jsonNote.optInt(Note.PRIORITY),
 				Category.toCategory(jsonNote.optString(Note.CATEGORY))
 				);
 		return note;
@@ -76,6 +77,7 @@ public class ByteUtils {
 			jsonNote.put(Note.TITLE, note.getTitle());
 			jsonNote.put(Note.CONTENT, note.getContent());
 			jsonNote.put(Note.TIMESTAMP, note.getTimestamp());
+			jsonNote.put(Note.PRIORITY, note.getPriority());
 			jsonNote.put(Note.CATEGORY, note.getCategory());
 		} catch (JSONException e1) {
 			e1.printStackTrace();
