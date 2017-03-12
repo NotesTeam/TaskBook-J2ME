@@ -2,7 +2,7 @@
 Port of TaskBook application for Java 2 devices.
 
 ## Demo
-![demo][demo.gif]
+![demo][demo]
 
 ## Features
 - Adding items to list
@@ -11,3 +11,6 @@ Port of TaskBook application for Java 2 devices.
 ## Posible improvements
 - Deleting records
 - Modyfing existing records
+
+
+[demo]: https://raw.githubusercontent.com/NotesTeam/TaskBook-J2ME/master/demo.gif "Demo gif"
