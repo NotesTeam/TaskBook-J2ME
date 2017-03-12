@@ -52,7 +52,6 @@ public class RecordStoreManager {
 		} catch (RecordStoreException e) {
 			e.printStackTrace();
 		}
-		System.out.println("getRecords size: " + vector.size());
 		return vector;
 	}
 
@@ -145,20 +144,4 @@ public class RecordStoreManager {
 				return RecordComparator.FOLLOWS;
 		}
 	}
-
-	//	private boolean isRecordStoreEmpty(){
-	//		try {
-	//			if(recordStore.getNumRecords() == 0) {
-	//				System.out.println("Record store is empty");
-	//				return true;
-	//			} else {
-	//				System.out.println("Record store is not empty");
-	//				System.out.println("Size of RecordStore: " + recordStore.getNumRecords());
-	//				return false;
-	//			}
-	//		} catch (RecordStoreNotOpenException e) {
-	//			e.printStackTrace();
-	//		}
-	//		return true;
-	//	}
 }

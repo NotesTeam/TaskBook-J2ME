@@ -13,7 +13,6 @@ public class MainMidlet extends MIDlet implements MainOperations {
 	}
 
 	protected void startApp() throws MIDletStateChangeException {
-		System.out.println("Midlet: startApp()");
 		display.setCurrent(notesList);
 		notesList.inflateList();
 	}

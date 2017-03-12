@@ -31,10 +31,8 @@ public class ShowNoteForm extends Form implements CommandListener {
 	}
 	
 	public void commandAction(Command c, Displayable d) {
-		if(c == back) {
-			System.out.println("Command clicked: Back");
+		if(c == back)
 			display.setCurrent(backDisplay);
-		}
 	}
 
 	private void setupFields() {

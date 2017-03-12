@@ -53,10 +53,8 @@ public class AddNoteForm extends Form implements CommandListener {
 	}
 
 	private void saveNoteToDB() {
-		System.out.println("Command clicked: Saved");
 		Note note = createNote();
 		if(note!=null) {
-			System.out.println("Saving: " + note.toString());
 			byte[] record = ByteUtils.toByteArray(note);
 			RecordStoreManager.getInstance().saveRecord(record);
 			callback.onListUpdate(note);
@@ -68,7 +66,6 @@ public class AddNoteForm extends Form implements CommandListener {
 		if(title.equals(""))
 			return null;
 		long dateInMilis = getDateInMilis();
-		System.out.println("Priority: " + String.valueOf(priorityField.getValue()));
 		return new Note(
 				title,
 				contentField.getString(),
