@@ -68,7 +68,7 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		RecordStoreManager.getInstance().sortByCategory();
 		inflateList();		
 	}
-	
+
 	private void sortListByTime() {
 		this.deleteAll();
 		RecordStoreManager.getInstance().sortByTime();
@@ -117,27 +117,22 @@ public class NotesList extends List implements CommandListener, ListUpdateListen
 		System.out.println("Command clicked: Select note: " + note.toString());
 		display.setCurrent(new ShowNoteForm(this, note));
 	}
-	
+
 	private Image getListRowImage(int priority){
 		Image image = null;
+		String path;
 		if (priority < 3)
-			try {
-				image = Image.createImage("/low.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			path = "/low.png";
 		else if (priority < 7)
-			try {
-				image = Image.createImage("/normal.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			path = "/normal.png";
 		else
-			try {
-				image = Image.createImage("/important.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			path = "/important.png";		
+		
+		try {
+			image = Image.createImage(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return image;
 	}
 }
