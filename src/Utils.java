@@ -8,7 +8,7 @@ public class Utils {
 		calendar.setTime(date);
 		String dateString = 
 				String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))+"/"
-				+String.valueOf(calendar.get(Calendar.MONTH)) +"/"
+				+String.valueOf(calendar.get(Calendar.MONTH)+1) +"/"
 				+String.valueOf(calendar.get(Calendar.YEAR));
 		return dateString;
 	}
