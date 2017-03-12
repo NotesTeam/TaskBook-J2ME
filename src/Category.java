@@ -11,19 +11,10 @@ public final class Category implements Comparable {
 	private static int upperBound = 0;
 	private Image icon;
 
-	private Category(String anID) {
-		this.id = anID;
-		this.ord = upperBound++;
-		try {
-			if(anID.equals("Family"))
-				this.icon = Image.createImage("/family.png");
-			else if(anID.equals("Work"))
-				this.icon = Image.createImage("/work.png");
-			else
-				this.icon = Image.createImage("/school.png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private Category(String id) {
+		this.id = id;
+		ord = upperBound++;
+		icon = getCategoryImage(id);
 	}
 
 	public String toString() {return this.id;}
@@ -62,4 +53,22 @@ public final class Category implements Comparable {
 			return 1;
 	}
 
+	private Image getCategoryImage(String id) {
+		Image image = null;
+		String path;
+
+		if(id.equals("Family"))
+			path = "/family.png";
+		else if(id.equals("Work"))
+			path = "/work.png";
+		else
+			path = "/school.png";
+
+		try {
+			image = Image.createImage(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		return image;
+	}
 }
